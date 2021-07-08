@@ -22,23 +22,17 @@ class Board extends React.Component {
     }
   
     render() {
+        const row = [0,3,6];
+        const col = [0,1,2];
         return (
             <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+                {row.map((r) => (
+                    <div className="board-row">
+                        {col.map((c) => (
+                            this.renderSquare(c+r)
+                        ))}
+                    </div>
+                ))}
             </div>
         );
     }
@@ -153,15 +147,15 @@ class Game extends React.Component {
 
 function squareToPosition(i) {
     const position = [
-        "(1,1)",
-        "(1,2)",
-        "(1,3)",
-        "(2,1)",
-        "(2,2)",
-        "(2,3)",
-        "(3,1)",
-        "(3,2)",
-        "(3,3)",
+        "(Col: 1, Ligne: 1)",
+        "(Col: 1, Ligne: 2)",
+        "(Col: 1, Ligne: 3)",
+        "(Col: 2, Ligne: 1)",
+        "(Col: 2, Ligne: 2)",
+        "(Col: 2, Ligne: 3)",
+        "(Col: 3, Ligne: 1)",
+        "(Col: 3, Ligne: 2)",
+        "(Col: 3, Ligne: 3)",
     ]
 
     return position[i];
