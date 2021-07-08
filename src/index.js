@@ -15,7 +15,8 @@ function Square(props) {
   
 class Board extends React.Component {
     renderSquare(i) {
-        return <Square 
+        return <Square
+            key={i}
             value={this.props.squares[i]}
             onClick={() => { this.props.onClick(i) }}
         />;
@@ -27,7 +28,7 @@ class Board extends React.Component {
         return (
             <div>
                 {row.map((r) => (
-                    <div className="board-row">
+                    <div key={r} className="board-row">
                         {col.map((c) => (
                             this.renderSquare(c+r)
                         ))}
@@ -49,6 +50,7 @@ class Game extends React.Component {
             }],
             xIsNext: true,
             stepNumber: 0,
+            order: "ASC",
         };
     }
 
@@ -79,10 +81,34 @@ class Game extends React.Component {
         });
     }
 
+    newGame () {
+        this.setState({
+            history: [{
+                squares: Array(9).fill(null),
+                position: "",
+                player: ""
+            }],
+            xIsNext: true,
+            stepNumber: 0,
+            order: "ASC",
+        });
+
+         return null;
+    }
+
+    reversed () {
+        this.setState({
+            history: this.state.history.reverse(),
+            order: this.state.order==="ASC"?"DESC":"ASC"
+        })
+    }
+
+
     render() {
-        const history = this.state.history
-        const current = history[this.state.stepNumber];
-        const winner = calculateWinner(current);
+        const history = this.state.history.slice(0, this.state.stepNumber + 1);
+        const current = history[history.length - 1];
+        const winner = calculateWinner(current.squares);
+        let order = this.state.order;
 
         const moves = history.map((step, move) => {
             const desc = move ? 
@@ -110,8 +136,14 @@ class Game extends React.Component {
                     />
                 </div>
                 <div className="game-info">
-                    <div>{status}</div>
-                    <ol>{moves}</ol>
+                    <div>
+                        {status}
+                        <button className={"button ml-5"} onClick={() => this.reversed()}>Ordre</button>
+                        <button className={"button button-active ml-5"} onClick={() => this.newGame()}>Redémarrer la partie</button>
+                    </div>
+                    <ul>
+                        {moves}
+                    </ul>
                 </div>
             </div>
         );
