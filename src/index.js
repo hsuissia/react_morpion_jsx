@@ -148,11 +148,11 @@ class Game extends React.Component {
                 <div className="game-info">
                     <div>
                         {status}
-                        <button className={"button ml-5"} onClick={() => this.reversed()}>Ordre</button>
+                        <button className={"button ml-5"} onClick={() => this.reversed()}>Ordre chronologique : {this.state.order==="ASC"?"Décroissant":"Croissant"}</button>
                         <button className={"button button-active ml-5"} onClick={() => this.newGame()}>Redémarrer la partie</button>
                     </div>
-                    <ol>
-                        {this.state.order==="ASC"?moves:moves.reverse()}
+                    <ol reversed={this.state.order!=="ASC"}>
+                        {this.state.order!=="ASC"?moves.reverse():moves}
                     </ol>
                 </div>
             </div>
