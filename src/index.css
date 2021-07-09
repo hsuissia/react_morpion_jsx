@@ -43,6 +43,11 @@ body {
     background-color: #f44336;
   }
 
+  .button.button-gold {
+    color: #fff;
+    background-color: #f4c536;
+  }
+
   .board-row:after {
     clear: both;
     content: "";
@@ -89,6 +94,10 @@ body {
     margin-left: 5px;
   }
 
+.mr-5 {
+  margin-right: 5px;
+}
+
   .winning-case {
-    background-color: yellow;
+    background-color: #f4c536;
   }

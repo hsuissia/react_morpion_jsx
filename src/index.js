@@ -47,7 +47,8 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null),
                 position: "",
-                player: ""
+                player: "",
+                haveWinner: false,
             }],
             xIsNext: true,
             stepNumber: 0,
@@ -68,6 +69,7 @@ class Game extends React.Component {
                 squares: squares,
                 position: squareToPosition(i),
                 player: this.state.xIsNext?"X":"O",
+                haveWinner: false,
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext,
@@ -87,11 +89,13 @@ class Game extends React.Component {
             history: [{
                 squares: Array(9).fill(null),
                 position: "",
-                player: ""
+                player: "",
+                haveWinner: false,
             }],
             xIsNext: true,
             stepNumber: 0,
             order: "ASC",
+
         });
 
          return null;
@@ -105,23 +109,24 @@ class Game extends React.Component {
 
 
     render() {
-        const history = this.state.history;
+        const history = this.state.history.slice();
         const current = history[this.state.stepNumber];
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
             const desc = move ? 
-            'Joueur '+ step.player +' à jouer en '+ step.position +' : Revenir' :
+            'Joueur '+ step.player +' à jouer en '+ step.position +'' :
             'Revenir au début de la partie';
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)} className={move === this.state.stepNumber?"button button-active":"button button-primary"}>{desc}</button>
+                    <button onClick={() => this.jumpTo(move)} className={move === this.state.stepNumber?"button button-active mr-5":step.haveWinner?"button button-gold mr-5":"button button-primary mr-5"}>Voir</button>{desc}
                 </li>
             )
         });
         let status;
         if(winner.gagnant) {
             status = winner.gagnant + ' win the game !';
+            current.haveWinner = true;
         } else {
             if (current.squares.includes(null)) {
                 status = 'Next player : ' + (this.state.xIsNext?"X":"O");
