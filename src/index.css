@@ -88,4 +88,7 @@ body {
   .ml-5 {
     margin-left: 5px;
   }
-  
+
+  .winning-case {
+    background-color: yellow;
+  }
