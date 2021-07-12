@@ -125,11 +125,11 @@ class Game extends React.Component {
         });
         let status;
         if(winner.gagnant) {
-            status = winner.gagnant + ' win the game !';
+            status = winner.gagnant + ' à gagné la partie !';
             current.haveWinner = true;
         } else {
             if (current.squares.includes(null)) {
-                status = 'Next player : ' + (this.state.xIsNext?"X":"O");
+                status = 'Prochain joueur : ' + (this.state.xIsNext?"X":"O");
             } else {
                 status = 'Match NUL !';
             }
@@ -137,23 +137,29 @@ class Game extends React.Component {
         }
 
         return (
-            <div className="game">
-                <div className="game-board">
-                    <Board 
-                        squares={current.squares}
-                        onClick={(i) => this.handleClick(i)}
-                        comboGagnant={winner.comboGagnant}
-                    />
-                </div>
-                <div className="game-info">
-                    <div>
-                        {status}
-                        <button className={"button ml-5"} onClick={() => this.reversed()}>Ordre chronologique : {this.state.order==="ASC"?"Décroissant":"Croissant"}</button>
+            <div>
+                <div className="game">
+                    <div className="game-buttons">
+                        <button className={"button button-primary"} onClick={() => this.reversed()}>Ordre chronologique : {this.state.order==="ASC"?"Décroissant":"Croissant"}</button>
                         <button className={"button button-active ml-5"} onClick={() => this.newGame()}>Redémarrer la partie</button>
                     </div>
-                    <ol reversed={this.state.order!=="ASC"}>
-                        {this.state.order!=="ASC"?moves.reverse():moves}
-                    </ol>
+                </div>
+                <div className="game">
+                    <div className="game-board">
+                        <Board 
+                            squares={current.squares}
+                            onClick={(i) => this.handleClick(i)}
+                            comboGagnant={winner.comboGagnant}
+                        />
+                    </div>
+                    <div className="game-info">
+                        <div>
+                            {status}
+                        </div>
+                        <ol reversed={this.state.order!=="ASC"}>
+                            {this.state.order!=="ASC"?moves.reverse():moves}
+                        </ol>
+                    </div>
                 </div>
             </div>
         );
